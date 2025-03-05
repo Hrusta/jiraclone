@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { Container, CssBaseline, TextField, Button, Typography, Box, Paper, Link } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; 
 import { auth } from '../../firebase-config';
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate(); 
 
   const handleLogin = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
+        
         console.log('Logged in user:', userCredential.user);
-        navigate('/'); // Redirect to home page after successful login
+        navigate('/'); 
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error('Error logging in:', errorCode, errorMessage);
-        // Handle errors here, such as showing a notification to the user
+        
       });
   };
 
