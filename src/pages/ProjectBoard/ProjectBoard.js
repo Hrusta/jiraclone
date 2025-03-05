@@ -1,4 +1,4 @@
-// src/pages/ProjectBoard/ProjectBoard.jsx
+
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -40,13 +40,13 @@ import { CSS } from '@dnd-kit/utilities';
 import { db } from '../../firebase-config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
-// A component to register each column as a droppable area even if empty
+
 function DroppableColumn({ id, children }) {
   const { setNodeRef } = useDroppable({ id });
   return <div ref={setNodeRef}>{children}</div>;
 }
 
-// Draggable Task component
+
 function Task({ id, content, assignedTo }) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
   const style = {
@@ -77,7 +77,7 @@ export default function ProjectBoard() {
     'Done': [],
   });
 
-  // States for adding a new task
+  
   const [openTaskDialog, setOpenTaskDialog] = useState(false);
   const [newTaskContent, setNewTaskContent] = useState('');
   const [newTaskAssignedTo, setNewTaskAssignedTo] = useState('');
@@ -88,7 +88,7 @@ export default function ProjectBoard() {
     useSensor(TouchSensor)
   );
 
-  // Load project data and distribute tasks into columns
+  
   useEffect(() => {
     async function fetchProject() {
       const projectRef = doc(db, 'projects', projectId);
@@ -112,7 +112,7 @@ export default function ProjectBoard() {
     fetchProject();
   }, [projectId]);
 
-  // Add a new task to the appropriate column and update Firestore
+  
   const handleAddTask = async () => {
     if (!newTaskContent || !newTaskAssignedTo) return;
     const newTask = {
@@ -125,7 +125,7 @@ export default function ProjectBoard() {
     updatedColumns[newTaskStatus] = [...updatedColumns[newTaskStatus], newTask];
     setColumns(updatedColumns);
 
-    // Update Firestore (combine tasks from all columns)
+    
     const updatedTasks = [];
     Object.keys(updatedColumns).forEach((status) => {
       updatedTasks.push(...updatedColumns[status]);
@@ -139,14 +139,14 @@ export default function ProjectBoard() {
     setNewTaskStatus('To Do');
   };
 
-  // Handle drag & drop across columns (left-to-right and vice versa)
+  
   const handleDragEnd = async (event) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
     let sourceColumn, sourceIndex, destinationColumn, destinationIndex;
 
-    // Find the source column and index
+    
     Object.keys(columns).forEach((status) => {
       columns[status].forEach((task, index) => {
         if (task.id === active.id) {
@@ -156,9 +156,7 @@ export default function ProjectBoard() {
       });
     });
 
-    // Determine destination:
-    // - If dropping over a task, find its column and index.
-    // - If dropping over a container (empty column), over.id will be the column id.
+   
     Object.keys(columns).forEach((status) => {
       if (!destinationColumn) {
         if (columns[status].length === 0 && over.id === status) {
@@ -191,7 +189,7 @@ export default function ProjectBoard() {
     }
     setColumns(updatedColumns);
 
-    // Update Firestore with new tasks order/status
+    
     const updatedTasks = [];
     Object.keys(updatedColumns).forEach((status) => {
       updatedTasks.push(...updatedColumns[status]);
