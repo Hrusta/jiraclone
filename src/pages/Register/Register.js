@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { Container, CssBaseline, TextField, Button, Typography, Box, Paper, Link } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; 
 import { auth } from '../../firebase-config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate(); 
 
   const handleRegister = (event) => {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Registration successful
+        
         console.log('User registered:', userCredential.user);
-        navigate('/'); // Redirect to home page after registration
+        navigate('/'); 
       })
       .catch((error) => {
-        // Handle Errors here.
+        
         console.error('Error registering:', error.code, error.message);
-        // Optionally, show error message to user
+        
       });
   };
 
