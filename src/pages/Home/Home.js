@@ -29,7 +29,7 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Listen to authentication state changes
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -37,7 +37,7 @@ export default function Home() {
     return () => unsubscribe();
   }, []);
 
-  // Fetch projects for the current user (if logged in)
+  
   useEffect(() => {
     async function fetchProjects() {
       try {
@@ -59,7 +59,7 @@ export default function Home() {
     fetchProjects();
   }, [user]);
 
-  // Create a new project and navigate to its board
+  
   const handleCreateProject = async () => {
     if (!newProjectName) return;
     try {
@@ -75,14 +75,14 @@ export default function Home() {
     }
   };
 
-  // Log out the current user
+  
   const handleLogOut = () => {
     auth.signOut();
   };
 
   return (
     <>
-      {/* Full width AppBar */}
+      
       <AppBar position="static" sx={{ mb: 3 }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -107,7 +107,7 @@ export default function Home() {
         </Toolbar>
       </AppBar>
 
-      {/* Centered Content */}
+     
       <Container maxWidth="md">
         <Paper sx={{ p: 2 }}>
           <Typography variant="h5" sx={{ mb: 2 }}>
@@ -137,7 +137,7 @@ export default function Home() {
           </List>
         </Paper>
 
-        {/* Dialog for creating a new project */}
+        
         <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
           <DialogTitle>New Project</DialogTitle>
           <DialogContent>
